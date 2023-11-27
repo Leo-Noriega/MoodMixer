@@ -3,20 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" media="all" href="styles/login.css"/>
 </head>
 <body>
-<form>
-    <div>
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username"/>
-    </div>
-    <div>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password"/>
-    </div>
-    <div>
-        <input type="submit" value="Login"/>
-    </div>
-</form>
+<div class='ripple-background'>
+    <div class='circle xxlarge shade1'></div>
+    <div class='circle xlarge shade2'></div>
+    <div class='circle large shade3'></div>
+    <div class='circle mediun shade4'></div>
+    <div class='circle small shade5'></div>
+</div>
+<div id="forms_container">
+    <form id="forms">
+        <div id="tittle">
+            <h1 style="text-align: center">Iniciar sesión en MoodMixer</h1>
+        </div>
+        <div>
+            <div id="username_container">
+                <h4>Correo electrónico</h4>
+            </div>
+            <input type="email" id="username" name="username" placeholder="Correo electrónico"/>
+        </div>
+        <div>
+            <div id="password-container">
+                <h4>Contraseña</h4>
+            </div>
+            <input type="password" id="password" name="password" placeholder="Contraseña"/>
+        </div>
+        <div>
+            <input type="submit" id="btn_login" value="Iniciar sesión"/>
+        </div>
+    </form>
+</div>
+
 </body>
+<script>
+    <script src="https://kit.fontawesome.com/4da517b40d.js" crossOrigin="anonymous"></script>
+</script>
 </html>
