@@ -1,36 +1,58 @@
 package mx.edu.utez.MoodMixer.controller;
 
-import mx.edu.utez.MoodMixer.model.dto.UserDto;
-import mx.edu.utez.MoodMixer.service.impl.UserImpl;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 
-@Controller
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.hc.core5.http.ParseException;
+import org.springframework.web.bind.annotation.*;
+import se.michaelthelin.spotify.SpotifyApi;
+import se.michaelthelin.spotify.SpotifyHttpManager;
+import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
+import se.michaelthelin.spotify.model_objects.credentials.AuthorizationCodeCredentials;
+import se.michaelthelin.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
+import se.michaelthelin.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
+
+import java.io.IOException;
+import java.net.URI;
+
+@RestController
+@RequestMapping("/api")
 public class AuthController {
+    private static final String clientId = "6dfbf23377c947b1805381bf0652ee84";
+    private static final String clientSecret = "b75ec3cc07204b1ab46506d1f34fd21a";
+    private static final URI REDIRECT_URI = SpotifyHttpManager.makeUri("http://localhost:8888/spotify/callback");
 
-    private UserImpl userImpl;
+    private String code = "";
 
-    public AuthController(UserImpl userImpl) {
-        this.userImpl = userImpl;
-    }
+    private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
+            .setClientId(clientId)
+            .setClientSecret(clientSecret)
+            .setRedirectUri(REDIRECT_URI)
+            .build();
 
-    @GetMapping("/login")
+    @GetMapping("login")
+    @ResponseBody
     public String login() {
-        return "login";
+        AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri()
+                .scope("user-read-private,user-read-email,user-top-read")
+                .show_dialog(true)
+                .build();
+        final URI uri = authorizationCodeUriRequest.execute();
+        return uri.toString();
     }
 
-    @GetMapping("/index")
-    public String index() {
-        return "index";
-    }
-
-    @GetMapping("/register")
-    public String showForm(Model model) {
-        UserDto user = new UserDto();
-        model.addAttribute("user", user);
-        return "register";
+    @GetMapping("callback")
+    public String getSpotofyUserCode(@RequestParam("code") String userCode, HttpServletResponse response) throws IOException {
+        code = userCode;
+        AuthorizationCodeRequest authorizationCodeUriRequest = spotifyApi.authorizationCode(code).build();
+        try {
+            final AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeUriRequest.execute();
+            spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
+            spotifyApi.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
+            System.out.println("Expires in: " + authorizationCodeCredentials.getExpiresIn());
+        } catch (IOException | SpotifyWebApiException | ParseException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        response.sendRedirect("http://localhost:8888/top-artists");
+        return spotifyApi.getAccessToken();
     }
 }

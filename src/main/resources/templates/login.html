@@ -19,24 +19,22 @@
             <h1 style="text-align: center">Iniciar sesión en MoodMixer</h1>
         </div>
         <div>
-            <div id="username_container">
-                <h4>Correo electrónico</h4>
-            </div>
-            <input type="email" id="username" name="username" placeholder="Correo electrónico"/>
-        </div>
-        <div>
-            <div id="password-container">
-                <h4>Contraseña</h4>
-            </div>
-            <input type="password" id="password" name="password" placeholder="Contraseña"/>
-        </div>
-        <div>
-            <input type="submit" id="btn_login" value="Iniciar sesión"/>
+            <input onclick="landingPage()" type="submit" id="btn_login" value="Iniciar sesión con Spotify"/>
         </div>
     </form>
 </div>
-
 </body>
+<script>
+    function landingPage() {
+        const getSpotifyUserLogin = () => {
+            fetch("https://localhost:8888/api/login")
+                .then(response => response.text())
+                .then(response => {
+                    window.location.replace = (response);
+                })
+        }
+    }
+</script>
 <script>
     <script src="https://kit.fontawesome.com/4da517b40d.js" crossOrigin="anonymous"></script>
 </script>
