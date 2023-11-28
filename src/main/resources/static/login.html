@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" media="all" href="../styles/login.css"/>
+    <link rel="stylesheet" media="all" href="styles/login.css"/>
 </head>
 <body>
 <div class='ripple-background'>
@@ -19,7 +19,7 @@
             <h1 style="text-align: center">Iniciar sesión en MoodMixer</h1>
         </div>
         <div>
-            <input onclick="landingPage()" type="submit" id="btn_login" value="Iniciar sesión con Spotify"/>
+            <input onclick="landingPage()" type="button" id="btn_login" value="Iniciar sesión con Spotify"/>
         </div>
     </form>
 </div>
@@ -27,12 +27,16 @@
 <script>
     function landingPage() {
         const getSpotifyUserLogin = () => {
-            fetch("https://localhost:8888/api/login")
+            fetch("http://localhost:8888/api/login")
                 .then(response => response.text())
                 .then(response => {
-                    window.location.replace = (response);
+                    console.log("Received response:", response);
+                    window.location.replace(response);
                 })
-        }
+                .catch(error => console.error("Fetch error:", error));
+        };
+
+        getSpotifyUserLogin();
     }
 </script>
 <script>

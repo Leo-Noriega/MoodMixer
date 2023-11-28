@@ -2,6 +2,7 @@ package mx.edu.utez.MoodMixer.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -11,11 +12,21 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SpringSecurity {
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(c -> c.disable())
-                .authorizeRequests().requestMatchers("/login").permitAll()
-                .anyRequest().authenticated()
-                .and().oauth2Login(oauth -> oauth.loginPage("/login").defaultSuccessUrl("/callback"));
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(customizeRequests -> {
+                            customizeRequests
+                                    .requestMatchers("/api/login", "/styles/**", "/js/**").permitAll()
+                                    .anyRequest().authenticated();
+                        }
+                )
+                .formLogin(form -> {
+                    form.loginPage("/login.html");
+                    form.failureUrl("/login?error");
+                    form.defaultSuccessUrl("/index.html");
+                    form.permitAll();
+                });
+
         return http.build();
     }
 }

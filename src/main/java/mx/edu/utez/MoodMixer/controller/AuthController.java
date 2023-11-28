@@ -17,9 +17,9 @@ import java.net.URI;
 @RestController
 @RequestMapping("/api")
 public class AuthController {
-    private static final String clientId = "6dfbf23377c947b1805381bf0652ee84";
-    private static final String clientSecret = "b75ec3cc07204b1ab46506d1f34fd21a";
-    private static final URI REDIRECT_URI = SpotifyHttpManager.makeUri("http://localhost:8888/spotify/callback");
+    private static final String clientId = "";
+    private static final String clientSecret = "";
+    private static final URI REDIRECT_URI = SpotifyHttpManager.makeUri("http://localhost:8888/login/callback");
 
     private String code = "";
 
@@ -29,7 +29,8 @@ public class AuthController {
             .setRedirectUri(REDIRECT_URI)
             .build();
 
-    @GetMapping("login")
+    @CrossOrigin(origins = "*")
+    @GetMapping("/login")
     @ResponseBody
     public String login() {
         AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri()
@@ -40,7 +41,7 @@ public class AuthController {
         return uri.toString();
     }
 
-    @GetMapping("callback")
+    @GetMapping("/callback")
     public String getSpotofyUserCode(@RequestParam("code") String userCode, HttpServletResponse response) throws IOException {
         code = userCode;
         AuthorizationCodeRequest authorizationCodeUriRequest = spotifyApi.authorizationCode(code).build();
