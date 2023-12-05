@@ -27,7 +27,7 @@ import java.util.Objects;
 public class AuthController {
     private static final String CLIENT_ID = "";
     private static final String CLIENT_SECRET = "";
-    private static final String SCOPE = "user-read-private user-read-email";
+    private static final String SCOPE = "user-read-private user-read-email user-top-read";
     private static final String REDIREC_URI = "http://localhost:8888/moodmixer/callback";
 
     public String token = "";
@@ -93,7 +93,7 @@ public class AuthController {
     @CrossOrigin(origins = {"http://localhost:5500", "http://127.0.0.1:5500"})
     @GetMapping("/home")
     public void home(HttpServletResponse response, HttpSession session) throws IOException {
-        response.sendRedirect("http://localhost:5500/index.html");
+        response.sendRedirect("http://localhost:5500/moodmixer/home.html");
     }
 
     @CrossOrigin(origins = {"http://localhost:5500", "http://127.0.0.1:5500"})
@@ -106,6 +106,20 @@ public class AuthController {
         HttpEntity<String> requestEntity = new HttpEntity<>("parameters", headers);
         ResponseEntity<String> result = restTemplate.exchange(
                 "https://api.spotify.com/v1/me", HttpMethod.GET, requestEntity, String.class);
+
+        return ResponseEntity.ok().body(Objects.requireNonNull(result.getBody()));
+    }
+
+    @CrossOrigin(origins = {"http://localhost:5500", "http://127.0.0.1:5500"})
+    @GetMapping("/top-artists")
+    public ResponseEntity<String> dataArtist(HttpSession session) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + token);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>("parameters", headers);
+        ResponseEntity<String> result = restTemplate.exchange(
+                "https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=5", HttpMethod.GET, requestEntity, String.class);
 
         return ResponseEntity.ok().body(Objects.requireNonNull(result.getBody()));
     }
