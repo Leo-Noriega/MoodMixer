@@ -11,7 +11,7 @@
     <script src="js/fetchsSpotify.js"></script>
 </head>
 
-<body>
+<body onload="getUserData()">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"
         rel="stylesheet">
@@ -31,8 +31,23 @@
         <span></span>
         <span></span>
         <div class="title">
-            COMO TE SIENTES HOY?
-            <br>
+            <div class="botonesEmociones">
+                <div class="alegria">
+                    <button onclick="topArtist()" class="b1">Tus top 5 artistas en las ultimas 4 semanas</button>
+                </div>
+                <!-- <div class="amor">
+                    <button class="b2">Enamorado</button>
+                </div>
+                <div class="tristeza">
+                    <button class="b3">Triste</button>
+                </div>
+                <div class="depresion">
+                    <button class="b4">Depresivo</button>
+                </div>
+                <div class="excitado">
+                    <button class="b5">Excitado</button>
+                </div> -->
+            </div>
         </div>
     </div>
     <div class="bg">
@@ -41,65 +56,15 @@
         <span></span>
     </div>
 
-    <div class="botonesEmociones">
-        <div class="alegria">
-            <button onclick="topArtist()" class="b1">Tus top 5 artistas en las ultimas 4 semanas</button>
+    <div class="card-content" id="cards-container">
+        <div class="card-details">
+            <h2 class="card-txt"> <br />
+                <span></span>
+            </h2>
         </div>
-        <!-- <div class="amor">
-            <button class="b2">Enamorado</button>
-        </div>
-        <div class="tristeza">
-            <button class="b3">Triste</button>
-        </div>
-        <div class="depresion">
-            <button class="b4">Depresivo</button>
-        </div>
-        <div class="excitado">
-            <button class="b5">Excitado</button>
-        </div> -->
     </div>
-
-    <!-- Playlist / Canción recomendada -->
-    <a href="#" class="card" id="card">
-        <img src="https://images.unsplash.com/photo-1526297003708-f5a1c2c9c6e7?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NjI0OTY1ODM&ixlib=rb-1.2.1&q=80"
-            alt="Artist/Song  art" class="card__img" id="card_img">
-        <span class="card__footer">
-            <span id="card_title">Awesome speedy card</span>
-            <span id="card_description">2 minutes!</span>
-        </span>
-    </a>
+</body>
 
 </body>
 
 </html>
-
-<script>
-    fetch('http://localhost:8888/moodmixer/data')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Desestructurar el json
-            const {
-                display_name,
-                images,
-                country,
-                product,
-                followers
-            } = data;
-
-            // Suponemos que quieres utilizar la primera imagen (índice 0)
-            document.getElementById('image').src = images[0].url;
-
-            document.getElementById('display_name').innerHTML = "Usuario: " + display_name;
-            document.getElementById('country').innerHTML = "País: " + country;
-            document.getElementById('product').innerHTML = "Suscripción: " + product;
-            document.getElementById('followers').innerHTML = "Seguidores: " + followers.total;
-        })
-        .catch(e => {
-            console.error('There was a problem with the fetch operation: ' + e.message);
-        });
-</script>

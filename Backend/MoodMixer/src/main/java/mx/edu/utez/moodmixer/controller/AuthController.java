@@ -80,7 +80,7 @@ public class AuthController {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.exchange("https://accounts.spotify.com/api/token",
                 HttpMethod.POST, requestEntity, String.class);
-        // redirigirla a el controlle /home con el token
+        // redirigirla a el controller /home con el token
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> jsonMap = mapper.readValue(responseEntity.getBody(), new TypeReference<>() {
         });
@@ -93,7 +93,7 @@ public class AuthController {
     @CrossOrigin(origins = {"http://localhost:5500", "http://127.0.0.1:5500"})
     @GetMapping("/home")
     public void home(HttpServletResponse response, HttpSession session) throws IOException {
-        response.sendRedirect("http://localhost:5500/moodmixer/home.html");
+        response.sendRedirect("http://localhost:5500/home.html");
     }
 
     @CrossOrigin(origins = {"http://localhost:5500", "http://127.0.0.1:5500"})
@@ -106,7 +106,6 @@ public class AuthController {
         HttpEntity<String> requestEntity = new HttpEntity<>("parameters", headers);
         ResponseEntity<String> result = restTemplate.exchange(
                 "https://api.spotify.com/v1/me", HttpMethod.GET, requestEntity, String.class);
-
         return ResponseEntity.ok().body(Objects.requireNonNull(result.getBody()));
     }
 
