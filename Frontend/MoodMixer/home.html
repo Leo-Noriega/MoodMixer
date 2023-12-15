@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/table.css">
     <script src="js/background.js"></script>
     <script src="js/fetchsSpotify.js"></script>
+    <script src="js/tableFetchs.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"
         rel="stylesheet">
@@ -41,7 +42,7 @@
             order: 1;
             /* Coloca .box a la derecha */
             margin-right: 20px;
-            
+
         }
 
         #cards-container {
@@ -93,7 +94,8 @@
 
             <div class="botonesEmociones">
                 <div class="alegria">
-                    <button onclick="topArtist()" class="b1"><strong>Tus top 5 artistas en las ultimas 4
+                    <button onclick="topArtist(), setTimeout(showTable, 1000)" class="b1"><strong>Mostrar tu top 6
+                            artistas en las ultimas 4
                             semanas</strong></button>
                 </div>
             </div>
@@ -109,41 +111,40 @@
             <thead>
                 <tr id="header">
                     <th>
-                        <h1>ID Card</h1>
+                        <h1>Id</h1>
                     </th>
                     <th>
-                        <h1>Nombre de la Tajeta</h1>
+                        <h1>Nombre del Artista</h1>
                     </th>
                     <th>
-                        <h1>pene</h1>
+                        <h1>Generos del Artista</h1>
                     </th>
                     <th>
-                        <h1>Pene</h1>
+                        <h1>Link del Artista</h1>
                     </th>
                     <th>
                         <h1>Acciones</h1>
                     </th>
                 </tr>
             </thead>
-            <!---->
             <tbody id="dinamic-container">
                 <tr>
-                    <form id="new-card">
+                    <form id="new-artist">
                         <td>
-                            <p>El que me lea es gay</p>
+                            <input id="id-artist" type="text">
                         </td>
                         <td>
-                            <p>El que me lea es gay</p>
+                            <input id="name-artist" type="text">
                         </td>
                         <td>
-                            <p>El que me lea es gay</p>
+                            <input id="genre-artist" type="text">
                         </td>
                         <td>
-                            <p>El que me lea es gay</p>
+                            <input id="link-artist" type="text">
+                        </td>
                         </td>
                         <td>
                             <input type="submit" class="btns" value="Crear tarjeta" />
-                            <input type="button" class="btns" value="Modificar Tarjeta" onclick="modifyCard()" />
                         </td>
                     </form>
                 </tr>
@@ -151,5 +152,6 @@
         </table>
     </div>
 </body>
+<script src="js/crudArtist.js"></script>
 
 </html>

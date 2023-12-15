@@ -1,4 +1,4 @@
-package mx.edu.utez.moodmixer.Config;
+package mx.edu.utez.moodmixer.config;
 
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

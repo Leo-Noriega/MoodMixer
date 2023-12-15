@@ -1,32 +1,48 @@
 /* Archivo css/index.css */
 
+html {
+    zoom: 0.8;
+}
+
 body {
     font-family: 'Tajawal', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #191414; /* Verde característico de Spotify */
-    color: #ffffff; /* Blanco para el texto */
+    background-color: #191414;
+    /* Verde característico de Spotify */
+    color: #ffffff;
+    /* Blanco para el texto */
     display: flex;
-    flex-direction: column; /* Cambia la dirección de apilamiento a vertical */
-    justify-content: center; /* Centra el contenido horizontalmente */
-    align-items: center; /* Centra el contenido verticalmente */
-    min-height: 100vh; /* Asegura que el contenido se extienda al menos al 100% del alto de la pantalla */
+    flex-direction: column;
+    /* Cambia la dirección de apilamiento a vertical */
+    justify-content: center;
+    /* Centra el contenido horizontalmente */
+    align-items: center;
+    /* Centra el contenido verticalmente */
+    min-height: 100vh;
+    /* Asegura que el contenido se extienda al menos al 100% del alto de la pantalla */
 
-    
+
 }
 
 .box {
-    background-color: #342d2d; /* Negro característico de Spotify */
-    padding: 15px; /* Reducido el padding */
+    background-color: #342d2d;
+    /* Negro característico de Spotify */
+    padding: 15px;
+    /* Reducido el padding */
     border-radius: 10px;
-    text-align: center; /* Centra el contenido dentro del div */
-    margin-bottom: 10px; /* Reducido el espacio entre .box y .card-content */
-    margin-top: 50px; /* Ajusta el espacio entre la parte superior de la página y .box */
+    text-align: center;
+    /* Centra el contenido dentro del div */
+    margin-bottom: 10px;
+    /* Reducido el espacio entre .box y .card-content */
+    margin-top: 50px;
+    /* Ajusta el espacio entre la parte superior de la página y .box */
 
 }
 
 .card-txt {
-    color: #ffffff; /* Blanco para el texto dentro de la caja */
+    color: #ffffff;
+    /* Blanco para el texto dentro de la caja */
     padding: 0;
 }
 
@@ -38,19 +54,23 @@ body {
 }
 
 .b1 {
-    background-color: #1DB954; /* Verde característico de Spotify */
-    color: #342d2d; /* Blanco para el texto del botón */
+    background-color: #1DB954;
+    /* Verde característico de Spotify */
+    color: #342d2d;
+    /* Blanco para el texto del botón */
     padding: 10px;
+    font-size: 1.2em;
     border: none;
     border-radius: 5px;
     margin: 5px 0;
     cursor: pointer;
-    
+
 }
 
 /*sombra color verde*/
-.b1:hover{
-    box-shadow: 0 0 20px #1DB954; /* Ejemplo de sombra con color #1DB954 y opacidad */
+.b1:hover {
+    box-shadow: 0 0 20px #1DB954;
+    /* Ejemplo de sombra con color #1DB954 y opacidad */
     color: #ffffff;
 }
 
@@ -58,26 +78,30 @@ body {
 
 .card-content {
     display: flex;
-    flex-direction: column; /* Cambia la dirección de apilamiento a vertical */
+    flex-direction: column;
+    /* Cambia la dirección de apilamiento a vertical */
     justify-content: center;
     align-items: center;
-    margin-top: 0px; /* Ajusta el espacio entre .box y .card-content */
-    
+    margin-top: 0px;
+    /* Ajusta el espacio entre .box y .card-content */
+
 }
 
 .card-details {
-    background-color: #191414; /* Negro característico de Spotify */
+    background-color: #191414;
+    /* Negro característico de Spotify */
     border-radius: 8px;
 }
 
-.card{
+.card {
     padding: 20px;
     height: 100px;
     width: 100px;
 }
 
 .card:hover {
-    box-shadow: 0 0 20px #1DB954; /* Ejemplo de sombra con color #1DB954 y opacidad */
+    box-shadow: 0 0 20px #1DB954;
+    /* Ejemplo de sombra con color #1DB954 y opacidad */
 }
 
 card .detail {
@@ -88,7 +112,7 @@ card .detail {
     text-align: center;
 }
 
-.img.box{
+.img.box {
     width: 100px;
     height: 100px;
 }
@@ -117,7 +141,9 @@ card .detail {
     height: 100px;
 }
 
-#country, #product, #followers {
+#country,
+#product,
+#followers {
     padding: 0;
     margin: 0;
 }
@@ -140,10 +166,11 @@ card .detail {
     font-size: 25px;
 }
 
-#display_name{
+#display_name {
     font-weight: bold;
 }
 
-.box:hover{
-    box-shadow: 0 0 20px #1DB954; /* Ejemplo de sombra con color #1DB954 y opacidad */
+.box:hover {
+    box-shadow: 0 0 20px #1DB954;
+    /* Ejemplo de sombra con color #1DB954 y opacidad */
 }

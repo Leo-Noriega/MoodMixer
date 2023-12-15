@@ -1,9 +1,16 @@
 package mx.edu.utez.moodmixer.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
+import mx.edu.utez.moodmixer.model.dto.ArtistDto;
+import mx.edu.utez.moodmixer.model.dto.UserDto;
+import mx.edu.utez.moodmixer.model.entity.User;
+import mx.edu.utez.moodmixer.service.IArtist;
+import mx.edu.utez.moodmixer.service.IUser;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -17,10 +24,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
-import java.util.Base64;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
+@RequiredArgsConstructor
 @RestController
 @CrossOrigin(origins = {"http://localhost:5500", "http://127.0.0.1:5500"})
 @RequestMapping("/moodmixer")
@@ -29,6 +35,8 @@ public class AuthController {
     private static final String CLIENT_SECRET = "";
     private static final String SCOPE = "user-read-private user-read-email user-top-read";
     private static final String REDIREC_URI = "http://localhost:8888/moodmixer/callback";
+    private final IUser userService;
+    private final IArtist artistService;
 
     public String token = "";
 
@@ -86,6 +94,7 @@ public class AuthController {
         });
 
         token = (String) jsonMap.get("access_token");
+
         response.sendRedirect("http://localhost:8888/moodmixer/home");
         // return new RedirectView("http://localhost:5500/index.html");
     }
@@ -106,6 +115,21 @@ public class AuthController {
         HttpEntity<String> requestEntity = new HttpEntity<>("parameters", headers);
         ResponseEntity<String> result = restTemplate.exchange(
                 "https://api.spotify.com/v1/me", HttpMethod.GET, requestEntity, String.class);
+
+        // del json que obtenemos sacar el "display_name" pa la base
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            Map<String, Object> userMap = mapper.readValue(result.getBody(), new TypeReference<Map<String, Object>>() {
+            });
+            String username = (String) userMap.get("display_name");
+            UserDto userDto = new UserDto();
+            userDto.setUsername(username);
+            userService.save(userDto);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+
         return ResponseEntity.ok().body(Objects.requireNonNull(result.getBody()));
     }
 
@@ -118,7 +142,41 @@ public class AuthController {
 
         HttpEntity<String> requestEntity = new HttpEntity<>("parameters", headers);
         ResponseEntity<String> result = restTemplate.exchange(
-                "https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=5", HttpMethod.GET, requestEntity, String.class);
+                "https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=6", HttpMethod.GET, requestEntity, String.class);
+
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> userMap = null;
+        try {
+            userMap = mapper.readValue(result.getBody(), new TypeReference<Map<String, Object>>() {
+            });
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        List<Object> artists = (List<Object>) userMap.get("items");
+
+        for (Object artistObject : artists) {
+            Map<String, Object> artistMap = (Map<String, Object>) artistObject;
+            String url = (String) ((Map<String, Object>) artistMap.get("external_urls")).get("spotify");
+
+            String name = (String) artistMap.get("name");
+            Object genresObject = artistMap.get("genres");
+            String genreString = "";
+            if (genresObject instanceof ArrayList) {
+                List<String> genresList = (List<String>) genresObject;
+                genreString = String.join(", ", genresList);
+            } else {
+                genreString = (String) genresObject;
+            }
+
+            ArtistDto artistDto = new ArtistDto();
+            artistDto.setId_user(1);
+            artistDto.setUrl(url);
+            artistDto.setName(name);
+            artistDto.setGenres(genreString);
+            // Set other fields based on artistMap
+
+            artistService.save(artistDto);
+        }
 
         return ResponseEntity.ok().body(Objects.requireNonNull(result.getBody()));
     }
@@ -129,5 +187,4 @@ public class AuthController {
         secureRandom.nextBytes(token);
         return Base64.getUrlEncoder().withoutPadding().encodeToString(token);
     }
-
 }
