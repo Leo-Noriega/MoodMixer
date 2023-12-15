@@ -4,6 +4,7 @@ function showTable() {
     }).then(response => response.json())
         .then(data => {
             let container = document.getElementById('dinamic-container');
+            container.innerHTML = "";
             data.forEach(artist => {
                 let row = document.createElement('tr');
 
@@ -34,14 +35,6 @@ function showTable() {
                 deleteButton.className = 'btns';
                 actionCell.appendChild(deleteButton);
 
-                let modifyButton = document.createElement('button');
-                modifyButton.textContent = 'Modificar Artista';
-                modifyButton.addEventListener('click', function () {
-                    modifyArtist(this);
-                });
-                modifyButton.className = 'btns';
-                actionCell.appendChild(modifyButton);
-
                 row.appendChild(actionCell);
 
                 container.appendChild(row);
@@ -50,3 +43,5 @@ function showTable() {
         })
         .catch(error => console.log(error));
 }
+
+setTimeout(showTable, 1000);

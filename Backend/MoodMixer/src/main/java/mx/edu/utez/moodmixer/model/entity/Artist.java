@@ -27,7 +27,7 @@ public class Artist {
     @Column(name = "url")
     private String url;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_user")
     @JsonIgnoreProperties({"artists"})
     private User user;

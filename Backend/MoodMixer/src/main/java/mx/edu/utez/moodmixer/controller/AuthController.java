@@ -169,7 +169,6 @@ public class AuthController {
             }
 
             ArtistDto artistDto = new ArtistDto();
-            artistDto.setId_user(1);
             artistDto.setUrl(url);
             artistDto.setName(name);
             artistDto.setGenres(genreString);

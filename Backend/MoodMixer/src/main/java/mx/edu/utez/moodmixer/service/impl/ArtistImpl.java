@@ -7,6 +7,7 @@ import mx.edu.utez.moodmixer.model.dto.ArtistDto;
 import mx.edu.utez.moodmixer.model.entity.Artist;
 import mx.edu.utez.moodmixer.model.entity.User;
 import mx.edu.utez.moodmixer.service.IArtist;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,7 @@ public class ArtistImpl implements IArtist {
         User user = userDao.findById(artist.getId_user()).orElse(null);
         Artist artistSave = Artist
                 .builder()
+                .id_artist(artist.getId_artist())
                 .name(artist.getName())
                 .genres(artist.getGenres())
                 .url(artist.getUrl())
@@ -41,7 +43,7 @@ public class ArtistImpl implements IArtist {
 
     @Override
     public List<Artist> findAll() {
-        return (List<Artist>) artistDao.findAll() ;
+        return (List<Artist>) artistDao.findAll();
     }
 
     @Override

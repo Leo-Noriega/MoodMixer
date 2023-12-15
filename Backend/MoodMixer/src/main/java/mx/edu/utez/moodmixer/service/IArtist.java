@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface IArtist {
     Artist save(ArtistDto artist);
+
     Artist findById(int id);
+
     List<Artist> findAll();
+
     void delete(Artist artist);
 }
