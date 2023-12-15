@@ -89,7 +89,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 120vh;
+    height: 90vh;
 }
 
 #forms {
@@ -98,8 +98,8 @@ body {
     align-items: center;
     color: white;
     background-color: black;
-    width: 60vh;
-    height: 80vh;
+    width: 70vh;
+    height: 28vh;
     border-radius: 15px;
 }
 
@@ -138,6 +138,7 @@ body {
 }
 
 #btn_login {
+    margin-top: 20px;
     height: 40px;
     width: 45vh;
     border-radius: 20px;
@@ -149,6 +150,7 @@ body {
 }
 
 #btn_login:hover {
-    scale: 1.02;
+    scale: 1.03;
     cursor: pointer;
+    color: white;
 }
