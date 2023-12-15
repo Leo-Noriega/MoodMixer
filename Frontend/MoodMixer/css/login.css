@@ -8,7 +8,7 @@ body {
 
 
 .circle {
-    position: absolute;
+    position: fixed;
     border-radius: 50%;
     background: #1db954;
     animation: ripple 15s infinite;
