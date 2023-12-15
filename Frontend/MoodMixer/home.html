@@ -7,64 +7,149 @@
     <title>Mood Mixer | Home</title>
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/card.css">
+    <link rel="stylesheet" href="css/table.css">
     <script src="js/background.js"></script>
     <script src="js/fetchsSpotify.js"></script>
-</head>
-
-<body onload="getUserData()">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"
         rel="stylesheet">
+    <style>
+        #cards-container {
+            margin-top: 0;
 
-    <div class="box">
-        <!-- Elementos del fetch -->
-        <div>
-            <h1 class="card-txt" id="display_name"></h1>
-            <img class="card-txt" id="image" src="" alt="Imagen del usuario">
-            <h2 class="card-txt" id="country"></h2>
-            <h2 class="card-txt" id="product"></h2>
-            <h2 class="card-txt" id="followers"></h2>
-        </div>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <div class="title">
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            /* Cambia a dirección de columna para apilar verticalmente */
+            align-items: center;
+            /* Centra los elementos horizontalmente */
+            justify-content: flex-start;
+            /* Alinea los elementos en la parte superior */
+            height: 100vh;
+            /* Establece la altura al 100% de la ventana de visualización */
+            margin: 0;
+            /* Elimina el margen predeterminado del cuerpo */
+        }
+
+        .containerG {
+            display: flex;
+        }
+
+        .box {
+            order: 1;
+            /* Coloca .box a la derecha */
+            margin-right: 20px;
+            
+        }
+
+        #cards-container {
+            order: 2;
+            /* Coloca #cards-container a la izquierda */
+            margin-top: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .card {
+            width: calc(30% - 10px);
+            /* Ancho de cada tarjeta con espacio entre ellas */
+            margin-bottom: 20px;
+            /* Espacio entre las filas */
+            box-sizing: border-box;
+            /* Incluye el relleno y el borde en el ancho y alto */
+
+            @media (max-width: 70%) {
+                width: calc(33.33% - 10px);
+                /* Cambia a tres columnas si el ancho de la pantalla es <= 70% del contenedor padre */
+            }
+
+            @media (max-width: 480px) {
+                width: calc(100% - 10px);
+                /* Cambia a una columna para pantallas muy pequeñas */
+            }
+        }
+
+        f #tabla {
+            margin-top: 20px;
+            /* Espacio entre #cards-container y #tabla */
+        }
+    </style>
+</head>
+
+<body onload="getUserData()">
+    <div class="containerG">
+        <div class="box">
+            <!-- Elementos del fetch -->
+            <div>
+                <h1 class="card-txt" id="display_name"></h1>
+                <img class="card-txt" id="image" src="" alt="Imagen del usuario">
+                <h2 class="card-txt" id="country"></h2>
+                <h2 class="card-txt" id="product"></h2>
+                <h2 class="card-txt" id="followers"></h2>
+            </div>
+
             <div class="botonesEmociones">
                 <div class="alegria">
-                    <button onclick="topArtist()" class="b1">Tus top 5 artistas en las ultimas 4 semanas</button>
+                    <button onclick="topArtist()" class="b1"><strong>Tus top 5 artistas en las ultimas 4
+                            semanas</strong></button>
                 </div>
-                <!-- <div class="amor">
-                    <button class="b2">Enamorado</button>
-                </div>
-                <div class="tristeza">
-                    <button class="b3">Triste</button>
-                </div>
-                <div class="depresion">
-                    <button class="b4">Depresivo</button>
-                </div>
-                <div class="excitado">
-                    <button class="b5">Excitado</button>
-                </div> -->
             </div>
         </div>
-    </div>
-    <div class="bg">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
 
-    <div class="card-content" id="cards-container">
-        <div class="card-details">
-            <h2 class="card-txt"> <br />
-                <span></span>
-            </h2>
+        <div class="card-content" id="cards-container">
+
         </div>
     </div>
-</body>
 
+    <div id="tabla">
+        <table class="container">
+            <thead>
+                <tr id="header">
+                    <th>
+                        <h1>ID Card</h1>
+                    </th>
+                    <th>
+                        <h1>Nombre de la Tajeta</h1>
+                    </th>
+                    <th>
+                        <h1>pene</h1>
+                    </th>
+                    <th>
+                        <h1>Pene</h1>
+                    </th>
+                    <th>
+                        <h1>Acciones</h1>
+                    </th>
+                </tr>
+            </thead>
+            <!---->
+            <tbody id="dinamic-container">
+                <tr>
+                    <form id="new-card">
+                        <td>
+                            <p>El que me lea es gay</p>
+                        </td>
+                        <td>
+                            <p>El que me lea es gay</p>
+                        </td>
+                        <td>
+                            <p>El que me lea es gay</p>
+                        </td>
+                        <td>
+                            <p>El que me lea es gay</p>
+                        </td>
+                        <td>
+                            <input type="submit" class="btns" value="Crear tarjeta" />
+                            <input type="button" class="btns" value="Modificar Tarjeta" onclick="modifyCard()" />
+                        </td>
+                    </form>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>

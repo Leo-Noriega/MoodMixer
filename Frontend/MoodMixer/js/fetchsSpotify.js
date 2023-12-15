@@ -45,6 +45,7 @@ function topArtist() {
                 const img = document.createElement('img');
                 img.src = artist.images[0].url; // Obtener la URL de la primera imagen
                 img.alt = 'img';
+                
 
                 const content = document.createElement('div');
                 content.classList.add('card-content');
@@ -54,7 +55,7 @@ function topArtist() {
 
                 const h2 = document.createElement('h2');
                 h2.classList.add('card-txt');
-                h2.innerHTML = `${artist.name}<br /><span>${artist.genres.join(', ')}</span>`;
+                h2.innerHTML = `${artist.name}`;
 
                 // Añade los elementos al DOM
                 imgBox.appendChild(img);
