@@ -45,7 +45,7 @@ function topArtist() {
                 const img = document.createElement('img');
                 img.src = artist.images[0].url; // Obtener la URL de la primera imagen
                 img.alt = 'img';
-                
+
 
                 const content = document.createElement('div');
                 content.classList.add('card-content');
